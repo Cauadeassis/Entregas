@@ -1,6 +1,7 @@
 import { z } from "zod"
 import prisma from "../database/prisma"
 import { Request, Response } from "express"
+import { updateDeliverySchema, createDeliverySchema } from "../schemas"
 
 export default class DeliveriesController {
     async index(request: Request, response: Response) {
@@ -12,11 +13,7 @@ export default class DeliveriesController {
         return response.json(deliveries)
     }
     async create(request: Request, response: Response) {
-        const bodySchema = z.object({
-            user_id: z.uuid("Invalid ID"),
-            description: z.string("Invalid description")
-        })
-        const { user_id, description } = bodySchema.parse(request.body)
+        const { user_id, description } = createDeliverySchema.parse(request.body)
         await prisma.delivery.create({
             data: {
                 userId: user_id,
@@ -29,11 +26,8 @@ export default class DeliveriesController {
         const paramsSchema = z.object({
             id: z.uuid("Invalid ID")
         })
-        const bodySchema = z.object({
-            status: z.enum(["processing", "shipped", "delivered"])
-        })
         const { id } = paramsSchema.parse(request.params)
-        const { status } = bodySchema.parse(request.body)
+        const { status } = updateDeliverySchema.parse(request.body)
         await prisma.delivery.update({
             data: {
                 status,

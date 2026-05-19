@@ -60,7 +60,7 @@ export default function Login() {
             if (isLogin) {
                 const token = await createSession(form.email, form.password)
                 localStorage.setItem("token", token)
-                navigate("/deliveries")
+                navigate("/")
             } else {
                 const { name, email, password, role } = form
                 await createUser({ name, email, password, role })
