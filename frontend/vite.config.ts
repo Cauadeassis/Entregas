@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import SERVER_PORT from '../backend/src/server'
+const SERVER_PORT = 3333
 
 // https://vite.dev/config/
 export default defineConfig({
