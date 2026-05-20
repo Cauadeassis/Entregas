@@ -7,6 +7,17 @@ import { registerSchema, updateUserSchema } from "../schemas"
 import { type UpdateUserData } from "../types/data"
 
 export default class UsersController {
+    async index(request: Request, response: Response) {
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+            }
+        })
+        return response.json(users)
+    }
     async create(request: Request, response: Response) {
         const { name, email, password } = registerSchema.parse(request.body)
         const userWithSameEmail = await prisma.user.findFirst({ where: { email } })

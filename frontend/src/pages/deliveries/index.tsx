@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styles from "./styles.module.css"
 import type Delivery from "../../types/deliveries"
 import type { DeliveryStatus } from "../../types/deliveries"
 import { getDeliveries, createDelivery, updateDelivery } from "../../services/deliveries"
 import { type CrudDeliveriesModal } from "../../types/modals"
+import { type User } from "../../types/users"
+import { getUsers } from "../../services/auth"
 
 const statusLabel: Record<DeliveryStatus, string> = {
     processing: "Processando",
@@ -16,6 +18,21 @@ export default function Deliveries() {
     const [modal, setModal] = useState<CrudDeliveriesModal>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [users, setUsers] = useState<User[]>([])
+
+    async function fetchUsers() {
+        try {
+            const data = await getUsers()
+            setUsers(data)
+        } catch (error) {
+            setError((error as Error).message)
+        }
+    }
+
+    useEffect(() => {
+        fetchDeliveries()
+        fetchUsers()
+    }, [])
     const closeModal = () => {
         setModal(null)
         setError(null)
@@ -142,8 +159,15 @@ export default function Deliveries() {
                                 <form onSubmit={handleCreateDelivery}>
                                     <fieldset className={styles.fieldset}>
                                         <div>
-                                            <label htmlFor="user_id">ID do usuário</label>
-                                            <input id="user_id" name="user_id" type="text" required />
+                                            <label htmlFor="user_id">Usuário</label>
+                                            <select id="user_id" name="user_id" required>
+                                                <option value="">Selecione um usuário</option>
+                                                {users.map(user => (
+                                                    <option key={user.id} value={user.id}>
+                                                        {user.name} — {user.email}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                         <div>
                                             <label htmlFor="description">Descrição</label>

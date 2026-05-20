@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_URL ?? ""
-import { type UserRole } from "../types/users"
+import { type UserRole, type User } from "../types/users"
 
 async function handleError(response: Response) {
     const data = await response.json()
@@ -44,4 +44,13 @@ export async function createUser({ name, email, password, role }: CreateUserProp
         body: JSON.stringify({ name, email, password, role }),
     })
     if (!response.ok) await handleError(response)
+}
+const authHeaders = () => ({
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+})
+export async function getUsers(): Promise<User[]> {
+    const response = await fetch(`${BASE_URL}/users`, { headers: authHeaders() })
+    if (!response.ok) throw new Error("Erro ao carregar usuários")
+    return response.json()
 }
