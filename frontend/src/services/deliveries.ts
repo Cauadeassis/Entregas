@@ -1,6 +1,6 @@
 import type Delivery from "../types/deliveries"
 import type { DeliveryStatus } from "../types/deliveries"
-const BASE_URL = "/deliveries"
+const BASE_URL = import.meta.env.VITE_API_URL ?? ""
 
 const authHeaders = () => ({
     "Content-Type": "application/json",
@@ -30,13 +30,13 @@ async function handleError(response: Response) {
 }
 
 export async function getDeliveries(): Promise<Delivery[]> {
-    const response = await fetch(BASE_URL, { headers: authHeaders() })
+    const response = await fetch(`${BASE_URL}/deliveries`, { headers: authHeaders() })
     if (!response.ok) await handleError(response)
     return response.json()
 }
 
 export async function createDelivery(user_id: string, description: string): Promise<void> {
-    const response = await fetch(BASE_URL, {
+    const response = await fetch(`${BASE_URL}/deliveries`, {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify({ user_id, description }),
@@ -45,7 +45,7 @@ export async function createDelivery(user_id: string, description: string): Prom
 }
 
 export async function updateDelivery(id: string, status: DeliveryStatus): Promise<void> {
-    const response = await fetch(`${BASE_URL}/${id}/status`, {
+    const response = await fetch(`${BASE_URL}/deliveries/${id}/status`, {
         method: "PATCH",
         headers: authHeaders(),
         body: JSON.stringify({ status }),

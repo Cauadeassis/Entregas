@@ -11,5 +11,8 @@ export default defineConfig({
             '/sessions': `http://localhost:${SERVER_PORT}`,
             '/deliveries': `http://localhost:${SERVER_PORT}`,
         }
+    },
+    define: {
+        __API_URL__: JSON.stringify(process.env.VITE_API_URL ?? "")
     }
 })

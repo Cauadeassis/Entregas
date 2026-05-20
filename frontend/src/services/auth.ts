@@ -1,5 +1,4 @@
-const BASE_URL_SESSIONS = "/sessions"
-const BASE_URL_USERS = "/users"
+const BASE_URL = import.meta.env.VITE_API_URL ?? ""
 import { type UserRole } from "../types/users"
 
 async function handleError(response: Response) {
@@ -19,7 +18,7 @@ async function handleError(response: Response) {
 }
 
 export async function createSession(email: string, password: string): Promise<string> {
-    const response = await fetch(BASE_URL_SESSIONS, {
+    const response = await fetch(`${BASE_URL}/sessions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -39,7 +38,7 @@ interface CreateUserProps {
 }
 
 export async function createUser({ name, email, password, role }: CreateUserProps): Promise<void> {
-    const response = await fetch(BASE_URL_USERS, {
+    const response = await fetch(`${BASE_URL}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role }),
