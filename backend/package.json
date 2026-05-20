@@ -2,9 +2,13 @@
     "name": "entregas",
     "version": "1.0.0",
     "description": "API de encomendas",
-    "main": "index.js",
+    "main": "src/server.ts",
+    "engines": {
+        "node": ">=24.0.0"
+    },
     "scripts": {
         "dev": "tsx watch --env-file .env src/server.ts",
+        "start": "tsx src/server.ts",
         "prisma:studio": "npx prisma studio",
         "prisma:migrate": "npx prisma migrate dev",
         "docker:up": "docker compose up -d",
