@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import AuthPage from "./pages/auth"
 import DeliveriesPage from "./pages/deliveries"
+import NotFound from "./pages/notFound"
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("token")
@@ -30,6 +31,7 @@ export default function App() {
                         </PrivateRoute>
                     }
                 />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     )
