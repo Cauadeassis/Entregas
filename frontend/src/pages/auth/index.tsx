@@ -156,9 +156,6 @@ export default function Login() {
                         }
                     </button>
                 </form>
-            </main>
-
-            <footer>
                 <span>
                     <p>
                         {isLogin ? "Não tem conta?" : "Já tem conta?"}
@@ -170,6 +167,10 @@ export default function Login() {
                         {isLogin ? "Cadastrar" : "Entrar"}
                     </button>
                 </span>
+            </main>
+
+            <footer>
+
                 <p>© {new Date().getFullYear()} Entregas</p>
             </footer>
         </div>

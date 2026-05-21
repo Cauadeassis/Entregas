@@ -162,14 +162,11 @@
                 }
             }
         }
-    }
-
-    & footer {
-        margin-top: 2rem;
 
         &>span {
             display: flex;
             gap: 1rem;
+            margin-top: 1rem;
 
             & button,
             & p {
@@ -189,6 +186,10 @@
                 }
             }
         }
+    }
+
+    & footer {
+        margin-top: 2rem;
 
         &>p {
             text-align: center;
@@ -196,6 +197,55 @@
             margin: 0.5rem auto;
             font-size: 0.75rem;
             color: #666;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .body {
+        padding: 0 1.5rem;
+        padding-top: 3rem;
+        justify-content: space-between;
+
+        & header {
+            justify-self: flex-start;
+            margin-bottom: 1.5rem;
+
+            & h1 {
+                font-size: 1.4rem;
+            }
+        }
+
+        & main {
+            max-width: 100%;
+            padding: 1.75rem 1.25rem;
+
+            & form {
+                gap: 1rem;
+
+                & fieldset {
+                    gap: 1rem;
+                }
+
+                & .passwordWrapper {
+                    & button {
+                        top: 0.65rem;
+                    }
+                }
+            }
+        }
+
+        & footer {
+            &>span {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.25rem;
+
+                & button,
+                & p {
+                    font-size: 0.9rem;
+                }
+            }
         }
     }
 }
